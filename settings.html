@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        body.black-theme {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        
+        body.sage-theme {
+            background-color: #d7e4c0;
+            color: #333;
+        }
+        
+        .settings-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .black-theme .settings-container {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        .sage-theme .settings-container {
+            background-color: white;
+            color: #333;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2196f3;
+            margin-bottom: 30px;
+            transition: color 0.3s;
+        }
+        
+        .black-theme h1 {
+            color: #90caf9;
+        }
+        
+        .sage-theme h1 {
+            color: #689f38;
+        }
+        
+        .setting-group {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        
+        .black-theme .setting-group {
+            border-color: #444;
+            background-color: #2a2a2a;
+        }
+        
+        .sage-theme .setting-group {
+            border-color: #8a9a5b;
+            background-color: #f8f9f6;
+        }
+        
+        .setting-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s;
+        }
+        
+        .black-theme .setting-title {
+            color: #e0e0e0;
+        }
+        
+        .sage-theme .setting-title {
+            color: #4a7043;
+        }
+        
+        .setting-item {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .setting-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .setting-label {
+            font-size: 14px;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .black-theme .setting-label {
+            color: #b0b0b0;
+        }
+        
+        .sage-theme .setting-label {
+            color: #5a6b4d;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        input[type="range"] {
+            width: 120px;
+            cursor: pointer;
+        }
+        
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        select {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
+        
+        .black-theme select {
+            background-color: #333;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+        
+        .sage-theme select {
+            border-color: #8a9a5b;
+        }
+        
+        .volume-display {
+            min-width: 35px;
+            text-align: center;
+            font-weight: bold;
+            color: #2196f3;
+            transition: color 0.3s;
+        }
+        
+        .black-theme .volume-display {
+            color: #90caf9;
+        }
+        
+        .sage-theme .volume-display {
+            color: #689f38;
+        }
+        
+        .button {
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .button:hover {
+            background-color: #1976d2;
+        }
+        
+        .black-theme .button {
+            background-color: #3f51b5;
+        }
+        
+        .black-theme .button:hover {
+            background-color: #5c6bc0;
+        }
+        
+        .sage-theme .button {
+            background-color: #689f38;
+        }
+        
+        .sage-theme .button:hover {
+            background-color: #558b2f;
+        }
+        
+        .button.secondary {
+            background-color: #757575;
+        }
+        
+        .button.secondary:hover {
+            background-color: #616161;
+        }
+        
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .test-audio {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
+        
+        .theme-preview {
+            width: 30px;
+            height: 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .theme-white { background: linear-gradient(45deg, #fff 50%, #f0f0f0 50%); }
+        .theme-black { background: linear-gradient(45deg, #2a2a2a 50%, #121212 50%); }
+        .theme-sage { background: linear-gradient(45deg, #d7e4c0 50%, #e0e6d7 50%); }
+        
+        .auto-save-indicator {
+            font-size: 12px;
+            color: #4caf50;
+            font-style: italic;
+            margin-top: 10px;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        
+        .black-theme .auto-save-indicator {
+            color: #81c784;
+        }
+        
+        .sage-theme .auto-save-indicator {
+            color: #4a7043;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .settings-container {
+                padding: 20px;
+            }
+            
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .control-group {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <h1>🎮 Game Settings</h1>
+        
+        <!-- Audio Settings -->
+        <div class="setting-group">
+            <div class="setting-title">🔊 Audio Settings</div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Enable Sound Effects</span>
+                <input type="checkbox" id="soundEnabled" checked>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Master Volume</span>
+                <div class="control-group">
+                    <input type="range" id="masterVolume" min="0" max="100" value="70">
+                    <span class="volume-display" id="masterVolumeDisplay">70%</span>
+                    <button class="button test-audio" onclick="testSound('click')">Test</button>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Number Input Sound</span>
+                <div class="control-group">
+                    <input type="range" id="inputVolume" min="0" max="100" value="60">
+                    <span class="volume-display" id="inputVolumeDisplay">60%</span>
+                    <button class="button test-audio" onclick="testSound('input')">Test</button>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Success Sound</span>
+                <div class="control-group">
+                    <input type="range" id="successVolume" min="0" max="100" value="80">
+                    <span class="volume-display" id="successVolumeDisplay">80%</span>
+                    <button class="button test-audio" onclick="testSound('success')">Test</button>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Error Sound</span>
+                <div class="control-group">
+                    <input type="range" id="errorVolume" min="0" max="100" value="50">
+                    <span class="volume-display" id="errorVolumeDisplay">50%</span>
+                    <button class="button test-audio" onclick="testSound('error')">Test</button>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Timer Alert</span>
+                <div class="control-group">
+                    <input type="checkbox" id="timerAlert" checked>
+                    <select id="timerAlertTime">
+                        <option value="60">1 minute left</option>
+                        <option value="120">2 minutes left</option>
+                        <option value="300">5 minutes left</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Visual Settings -->
+        <div class="setting-group">
+            <div class="setting-title">🎨 Visual Settings</div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Theme</span>
+                <div class="control-group">
+                    <div class="theme-preview theme-white" onclick="setTheme('white')" title="Light Theme"></div>
+                    <div class="theme-preview theme-black" onclick="setTheme('black')" title="Dark Theme"></div>
+                    <div class="theme-preview theme-sage" onclick="setTheme('sage')" title="Sage Theme"></div>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Font Size</span>
+                <div class="control-group">
+                    <input type="range" id="fontSize" min="12" max="32" value="16">
+                    <span class="volume-display" id="fontSizeDisplay">16px</span>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Highlight Conflicts</span>
+                <input type="checkbox" id="highlightConflicts" checked>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Show Possible Numbers</span>
+                <input type="checkbox" id="showHints">
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Animation Speed</span>
+                <div class="control-group">
+                    <select id="animationSpeed">
+                        <option value="slow">Slow</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="fast">Fast</option>
+                        <option value="none">No Animation</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gameplay Settings -->
+        <div class="setting-group">
+            <div class="setting-title">🎯 Gameplay Settings</div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Auto-Check Mistakes</span>
+                <input type="checkbox" id="autoCheck" checked>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Pause on Focus Loss</span>
+                <input type="checkbox" id="pauseOnBlur" checked>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Keyboard Navigation</span>
+                <input type="checkbox" id="keyboardNav" checked>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Auto-Save Progress</span>
+                <input type="checkbox" id="autoSave" checked>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Default Difficulty</span>
+                <div class="control-group">
+                    <select id="defaultDifficulty">
+                        <option value="beginner">Beginner</option>
+                        <option value="easy" selected>Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="setting-group">
+            <div class="setting-title">📊 Statistics</div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Track Statistics</span>
+                <input type="checkbox" id="trackStats" checked>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Games Completed</span>
+                <span class="volume-display" id="gamesCompleted">0</span>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Best Time</span>
+                <span class="volume-display" id="bestTime">--:--</span>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label">Average Time</span>
+                <span class="volume-display" id="averageTime">--:--</span>
+            </div>
+            
+            <div class="setting-item">
+                <span class="setting-label"></span>
+                <button class="button secondary" onclick="resetStats()">Reset Statistics</button>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button class="button" onclick="saveSettings()">Save Settings</button>
+            <button class="button secondary" onclick="resetToDefaults()">Reset to Defaults</button>
+            <button class="button secondary" onclick="window.close()">Close</button>
+        </div>
+        
+        <div class="auto-save-indicator" id="autoSaveIndicator" style="display: none;">
+            ✓ Settings saved automatically
+        </div>
+    </div>
+    
+    <script>
+        // Audio context for generating tones
+        let audioContext;
+        let currentSettings = {};
+        
+        // Initialize audio context
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        // Generate different tones for different actions
+        function playTone(frequency, duration, volume, type = 'sine') {
+            if (!document.getElementById('soundEnabled').checked) return;
+            
+            initAudio();
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.type = type;
+            
+            const masterVol = document.getElementById('masterVolume').value / 100;
+            gainNode.gain.setValueAtTime(volume * masterVol, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+        
+        // Test different sound types
+        function testSound(type) {
+            const volumes = {
+                click: document.getElementById('masterVolume').value / 100,
+                input: document.getElementById('inputVolume').value / 100,
+                success: document.getElementById('successVolume').value / 100,
+                error: document.getElementById('errorVolume').value / 100
+            };
+            
+            switch(type) {
+                case 'click':
+                    playTone(800, 0.1, volumes.click, 'square');
+                    break;
+                case 'input':
+                    playTone(600, 0.15, volumes.input);
+                    break;
+                case 'success':
+                    playTone(523, 0.2, volumes.success); // C note
+                    setTimeout(() => playTone(659, 0.2, volumes.success), 200); // E note
+                    setTimeout(() => playTone(784, 0.3, volumes.success), 400); // G note
+                    break;
+                case 'error':
+                    playTone(200, 0.3, volumes.error, 'sawtooth');
+                    break;
+            }
+        }
+        
+        // Update volume displays
+        function updateVolumeDisplay(sliderId, displayId) {
+            const slider = document.getElementById(sliderId);
+            const display = document.getElementById(displayId);
+            display.textContent = slider.value + '%';
+        }
+        
+        // Set theme
+        function setTheme(theme) {
+            document.body.classList.remove('white-theme', 'black-theme', 'sage-theme');
+            document.body.classList.add(`${theme}-theme`);
+            currentSettings.theme = theme;
+            autoSaveSettings();
+        }
+        
+        // Load settings from localStorage or set defaults
+        function loadSettings() {
+            const savedSettings = JSON.parse(localStorage.getItem('sudokuSettings') || '{}');
+            
+            // Default settings
+            const defaults = {
+                soundEnabled: true,
+                masterVolume: 70,
+                inputVolume: 60,
+                successVolume: 80,
+                errorVolume: 50,
+                timerAlert: true,
+                timerAlertTime: 60,
+                theme: 'white',
+                fontSize: 16,
+                highlightConflicts: true,
+                showHints: false,
+                animationSpeed: 'normal',
+                autoCheck: true,
+                pauseOnBlur: true,
+                keyboardNav: true,
+                autoSave: true,
+                defaultDifficulty: 'easy',
+                trackStats: true,
+                gamesCompleted: 0,
+                bestTime: 0,
+                averageTime: 0
+            };
+            
+            currentSettings = { ...defaults, ...savedSettings };
+            
+            // Apply settings to UI
+            Object.keys(currentSettings).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.type === 'checkbox') {
+                        element.checked = currentSettings[key];
+                    } else if (element.type === 'range') {
+                        element.value = currentSettings[key];
+                        updateVolumeDisplay(key, key + 'Display');
+                    } else if (element.tagName === 'SELECT') {
+                        element.value = currentSettings[key];
+                    }
+                }
+            });
+            
+            // Apply theme
+            setTheme(currentSettings.theme);
+            
+            // Update font size display
+            document.getElementById('fontSizeDisplay').textContent = currentSettings.fontSize + 'px';
+            
+            // Update statistics display
+            document.getElementById('gamesCompleted').textContent = currentSettings.gamesCompleted;
+            document.getElementById('bestTime').textContent = formatTime(currentSettings.bestTime);
+            document.getElementById('averageTime').textContent = formatTime(currentSettings.averageTime);
+        }
+        
+        // Format time for display
+        function formatTime(seconds) {
+            if (seconds === 0) return '--:--';
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // Save settings to localStorage
+        function saveSettings() {
+            // Collect all settings
+            const settings = {};
+            
+            // Checkboxes
+            ['soundEnabled', 'timerAlert', 'highlightConflicts', 'showHints', 'autoCheck', 'pauseOnBlur', 'keyboardNav', 'autoSave', 'trackStats'].forEach(id => {
+                settings[id] = document.getElementById(id).checked;
+            });
+            
+            // Range inputs
+            ['masterVolume', 'inputVolume', 'successVolume', 'errorVolume', 'fontSize'].forEach(id => {
+                settings[id] = parseInt(document.getElementById(id).value);
+            });
+            
+            // Select elements
+            ['timerAlertTime', 'animationSpeed', 'defaultDifficulty'].forEach(id => {
+                settings[id] = document.getElementById(id).value;
+            });
+            
+            // Keep existing stats
+            settings.gamesCompleted = currentSettings.gamesCompleted;
+            settings.bestTime = currentSettings.bestTime;
+            settings.averageTime = currentSettings.averageTime;
+            settings.theme = currentSettings.theme;
+            
+            localStorage.setItem('sudokuSettings', JSON.stringify(settings));
+            currentSettings = settings;
+            
+            showAutoSaveIndicator();
+            playTone(600, 0.1, 0.3);
+        }
+        
+        // Auto-save settings
+        function autoSaveSettings() {
+            if (document.getElementById('autoSave').checked) {
+                setTimeout(saveSettings, 100);
+            }
+        }
+        
+        // Show auto-save indicator
+        function showAutoSaveIndicator() {
+            const indicator = document.getElementById('autoSaveIndicator');
+            indicator.style.display = 'block';
+            setTimeout(() => {
+                indicator.style.display = 'none';
+            }, 2000);
+        }
+        
+        // Reset to defaults
+        function resetToDefaults() {
+            if (confirm('Are you sure you want to reset all settings to defaults?')) {
+                localStorage.removeItem('sudokuSettings');
+                location.reload();
+            }
+        }
+        
+        // Reset statistics
+        function resetStats() {
+            if (confirm('Are you sure you want to reset all statistics?')) {
+                currentSettings.gamesCompleted = 0;
+                currentSettings.bestTime = 0;
+                currentSettings.averageTime = 0;
+                
+                document.getElementById('gamesCompleted').textContent = '0';
+                document.getElementById('bestTime').textContent = '--:--';
+                document.getElementById('averageTime').textContent = '--:--';
+                
+                saveSettings();
+            }
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+            
+            // Add event listeners for auto-save
+            const autoSaveElements = document.querySelectorAll('input, select');
+            autoSaveElements.forEach(element => {
+                element.addEventListener('change', autoSaveSettings);
+                
+                // Update volume displays for range inputs
+                if (element.type === 'range') {
+                    element.addEventListener('input', () => {
+                        const displayId = element.id + 'Display';
+                        if (element.id === 'fontSize') {
+                            document.getElementById(displayId).textContent = element.value + 'px';
+                        } else {
+                            updateVolumeDisplay(element.id, displayId);
+                        }
+                    });
+                }
+            });
+            
+            // Enable audio interaction on first user interaction
+            document.addEventListener('click', initAudio, { once: true });
+        });
+    </script>
+</body>
+</html>

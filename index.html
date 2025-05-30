@@ -46,7 +46,7 @@
             display: grid;
             grid-template-columns: repeat(9, 1fr);
             gap: 1px;
-            margin: 40px auto; /* Increased from 30px to accommodate larger gap and timer */
+            margin: 40px auto;
             border: 2px solid #333;
             transition: border-color 0.3s;
         }
@@ -209,7 +209,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
-            margin-top: 50px; /* Increased from 20px for larger gap */
+            margin-top: 50px;
             width: 100%;
         }
         
@@ -556,7 +556,7 @@
                 aspect-ratio: 1 / 1;
                 height: calc(50vh - 60px);
                 box-sizing: border-box;
-                margin: 40px auto; /* Match desktop */
+                margin: 40px auto;
             }
             
             .cell {
@@ -579,7 +579,7 @@
                 flex-direction: row;
                 justify-content: space-between;
                 gap: 10px;
-                margin-top: 50px; /* Match desktop */
+                margin-top: 50px;
             }
             
             .button {
@@ -785,7 +785,7 @@
                 });
                 
                 document.getElementById('settings').addEventListener('click', () => {
-                    this.showStatus('Settings menu not implemented yet.', 'error');
+                    window.open('settings.html', '_blank');
                 });
                 
                 document.getElementById('back').addEventListener('click', () => {
