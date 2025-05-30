@@ -6,11 +6,11 @@
     <title>Sudoku Settings</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
             background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
             transition: background-color 0.3s, color 0.3s;
         }
         
@@ -25,80 +25,129 @@
         }
         
         .settings-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex: 1;
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        
+        .sidebar {
+            width: 200px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px 0 0 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: background-color 0.3s, color 0.3s;
         }
         
-        .black-theme .settings-container {
+        .black-theme .sidebar {
             background-color: #1e1e1e;
             color: #e0e0e0;
         }
         
-        .sage-theme .settings-container {
-            background-color: white;
+        .sage-theme .sidebar {
+            background-color: #e0e6d7;
             color: #333;
         }
         
-        h1 {
-            text-align: center;
+        .sidebar h2 {
+            font-size: 20px;
+            margin: 0 0 20px;
             color: #2196f3;
-            margin-bottom: 30px;
             transition: color 0.3s;
         }
         
-        .black-theme h1 {
+        .black-theme .sidebar h2 {
             color: #90caf9;
         }
         
-        .sage-theme h1 {
+        .sage-theme .sidebar h2 {
             color: #689f38;
         }
         
-        .setting-group {
-            margin-bottom: 25px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            transition: border-color 0.3s, background-color 0.3s;
+        .nav-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
         }
         
-        .black-theme .setting-group {
-            border-color: #444;
-            background-color: #2a2a2a;
+        .nav-item:hover {
+            background-color: #e3f2fd;
         }
         
-        .sage-theme .setting-group {
-            border-color: #8a9a5b;
-            background-color: #f8f9f6;
+        .black-theme .nav-item:hover {
+            background-color: #3f51b5;
         }
         
-        .setting-title {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.3s;
+        .sage-theme .nav-item:hover {
+            background-color: #dcedc8;
         }
         
-        .black-theme .setting-title {
+        .nav-item.active {
+            background-color: #2196f3;
+            color: white;
+        }
+        
+        .black-theme .nav-item.active {
+            background-color: #5c6bc0;
+        }
+        
+        .sage-theme .nav-item.active {
+            background-color: #689f38;
+        }
+        
+        .content {
+            flex: 1;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .black-theme .content {
+            background-color: #1e1e1e;
             color: #e0e0e0;
         }
         
-        .sage-theme .setting-title {
-            color: #4a7043;
+        .sage-theme .content {
+            background-color: #e0e6d7;
+            color: #333;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .setting-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .black-theme .setting-card {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        
+        .sage-theme .setting-card {
+            background-color: #f8f9f6;
+            color: #333;
         }
         
         .setting-item {
-            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
         
         .setting-item:last-child {
@@ -155,7 +204,7 @@
             border-color: #8a9a5b;
         }
         
-        .volume-display {
+        .value-display {
             min-width: 35px;
             text-align: center;
             font-weight: bold;
@@ -163,11 +212,11 @@
             transition: color 0.3s;
         }
         
-        .black-theme .volume-display {
+        .black-theme .value-display {
             color: #90caf9;
         }
         
-        .sage-theme .volume-display {
+        .sage-theme .value-display {
             color: #689f38;
         }
         
@@ -211,16 +260,9 @@
         }
         
         .actions {
-            text-align: center;
-            margin-top: 30px;
             display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-        
-        .test-audio {
-            font-size: 12px;
-            padding: 4px 8px;
+            gap: 10px;
+            margin-top: 20px;
         }
         
         .theme-preview {
@@ -241,7 +283,6 @@
             color: #4caf50;
             font-style: italic;
             margin-top: 10px;
-            text-align: center;
             transition: color 0.3s;
         }
         
@@ -253,230 +294,215 @@
             color: #4a7043;
         }
         
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            
+        @media (max-width: 700px) {
             .settings-container {
-                padding: 20px;
-            }
-            
-            .setting-item {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
             }
             
-            .control-group {
+            .sidebar {
                 width: 100%;
-                justify-content: space-between;
+                border-radius: 8px;
+                margin-bottom: 10px;
             }
             
-            .actions {
-                flex-direction: column;
-                gap: 10px;
+            .content {
+                border-radius: 8px;
             }
         }
     </style>
 </head>
 <body>
     <div class="settings-container">
-        <h1>🎮 Game Settings</h1>
-        
-        <!-- Audio Settings -->
-        <div class="setting-group">
-            <div class="setting-title">🔊 Audio Settings</div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Enable Sound Effects</span>
-                <input type="checkbox" id="soundEnabled" checked>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Master Volume</span>
-                <div class="control-group">
-                    <input type="range" id="masterVolume" min="0" max="100" value="70">
-                    <span class="volume-display" id="masterVolumeDisplay">70%</span>
-                    <button class="button test-audio" onclick="testSound('click')">Test</button>
-                </div>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Number Input Sound</span>
-                <div class="control-group">
-                    <input type="range" id="inputVolume" min="0" max="100" value="60">
-                    <span class="volume-display" id="inputVolumeDisplay">60%</span>
-                    <button class="button test-audio" onclick="testSound('input')">Test</button>
-                </div>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Success Sound</span>
-                <div class="control-group">
-                    <input type="range" id="successVolume" min="0" max="100" value="80">
-                    <span class="volume-display" id="successVolumeDisplay">80%</span>
-                    <button class="button test-audio" onclick="testSound('success')">Test</button>
-                </div>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Error Sound</span>
-                <div class="control-group">
-                    <input type="range" id="errorVolume" min="0" max="100" value="50">
-                    <span class="volume-display" id="errorVolumeDisplay">50%</span>
-                    <button class="button test-audio" onclick="testSound('error')">Test</button>
-                </div>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Timer Alert</span>
-                <div class="control-group">
-                    <input type="checkbox" id="timerAlert" checked>
-                    <select id="timerAlertTime">
-                        <option value="60">1 minute left</option>
-                        <option value="120">2 minutes left</option>
-                        <option value="300">5 minutes left</option>
-                    </select>
-                </div>
-            </div>
+        <div class="sidebar">
+            <h2>Settings</h2>
+            <div class="nav-item active" data-section="audio">🔊 Audio</div>
+            <div class="nav-item" data-section="visual">🎨 Visual</div>
+            <div class="nav-item" data-section="gameplay">🎯 Gameplay</div>
+            <div class="nav-item" data-section="stats">📊 Statistics</div>
         </div>
-        
-        <!-- Visual Settings -->
-        <div class="setting-group">
-            <div class="setting-title">🎨 Visual Settings</div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Theme</span>
-                <div class="control-group">
-                    <div class="theme-preview theme-white" onclick="setTheme('white')" title="Light Theme"></div>
-                    <div class="theme-preview theme-black" onclick="setTheme('black')" title="Dark Theme"></div>
-                    <div class="theme-preview theme-sage" onclick="setTheme('sage')" title="Sage Theme"></div>
+        <div class="content">
+            <!-- Audio Settings -->
+            <div class="content-section active" id="audio">
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Enable Sound Effects</span>
+                        <input type="checkbox" id="soundEnabled">
+                    </div>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Master Volume</span>
+                        <div class="control-group">
+                            <input type="range" id="masterVolume" min="0" max="100" value="70">
+                            <span class="value-display" id="masterVolumeDisplay">70%</span>
+                            <button class="button" onclick="testSound('click')">Test</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Number Input Sound</span>
+                        <div class="control-group">
+                            <input type="range" id="inputVolume" min="0" max="100" value="60">
+                            <span class="value-display" id="inputVolumeDisplay">60%</span>
+                            <button class="button" onclick="testSound('input')">Test</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Success Sound</span>
+                        <div class="control-group">
+                            <input type="range" id="successVolume" min="0" max="100" value="80">
+                            <span class="value-display" id="successVolumeDisplay">80%</span>
+                            <button class="button" onclick="testSound('success')">Test</button>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Error Sound</span>
+                        <div class="control-group">
+                            <input type="range" id="errorVolume" min="0" max="100" value="50">
+                            <span class="value-display" id="errorVolumeDisplay">50%</span>
+                            <button class="button" onclick="testSound('error')">Test</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Timer Alert</span>
+                        <div class="control-group">
+                            <input type="checkbox" id="timerAlert">
+                            <select id="timerAlertTime">
+                                <option value="60">1 minute left</option>
+                                <option value="120">2 minutes left</option>
+                                <option value="300">5 minutes left</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="setting-item">
-                <span class="setting-label">Font Size</span>
-                <div class="control-group">
-                    <input type="range" id="fontSize" min="12" max="32" value="16">
-                    <span class="volume-display" id="fontSizeDisplay">16px</span>
+            <!-- Visual Settings -->
+            <div class="content-section" id="visual">
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Theme</span>
+                        <div class="control-group">
+                            <div class="theme-preview theme-white" onclick="setTheme('white')" title="Light Theme"></div>
+                            <div class="theme-preview theme-black" onclick="setTheme('black')" title="Dark Theme"></div>
+                            <div class="theme-preview theme-sage" onclick="setTheme('sage')" title="Sage Theme"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Font Size</span>
+                        <div class="control-group">
+                            <input type="range" id="fontSize" min="12" max="32" value="16">
+                            <span class="value-display" id="fontSizeDisplay">16px</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Highlight Conflicts</span>
+                        <input type="checkbox" id="highlightConflicts">
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Show Possible Numbers</span>
+                        <input type="checkbox" id="showHints">
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Animation Speed</span>
+                        <select id="animationSpeed">
+                            <option value="slow">Slow</option>
+                            <option value="normal">Normal</option>
+                            <option value="fast">Fast</option>
+                            <option value="none">No Animation</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             
-            <div class="setting-item">
-                <span class="setting-label">Highlight Conflicts</span>
-                <input type="checkbox" id="highlightConflicts" checked>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Show Possible Numbers</span>
-                <input type="checkbox" id="showHints">
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Animation Speed</span>
-                <div class="control-group">
-                    <select id="animationSpeed">
-                        <option value="slow">Slow</option>
-                        <option value="normal" selected>Normal</option>
-                        <option value="fast">Fast</option>
-                        <option value="none">No Animation</option>
-                    </select>
+            <!-- Gameplay Settings -->
+            <div class="content-section" id="gameplay">
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Auto-Check Mistakes</span>
+                        <input type="checkbox" id="autoCheck">
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Pause on Focus Loss</span>
+                        <input type="checkbox" id="pauseOnBlur">
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Keyboard Navigation</span>
+                        <input type="checkbox" id="keyboardNav">
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Auto-Save Progress</span>
+                        <input type="checkbox" id="autoSave">
+                    </div>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Default Difficulty</span>
+                        <select id="defaultDifficulty">
+                            <option value="beginner">Beginner</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Gameplay Settings -->
-        <div class="setting-group">
-            <div class="setting-title">🎯 Gameplay Settings</div>
             
-            <div class="setting-item">
-                <span class="setting-label">Auto-Check Mistakes</span>
-                <input type="checkbox" id="autoCheck" checked>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Pause on Focus Loss</span>
-                <input type="checkbox" id="pauseOnBlur" checked>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Keyboard Navigation</span>
-                <input type="checkbox" id="keyboardNav" checked>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Auto-Save Progress</span>
-                <input type="checkbox" id="autoSave" checked>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Default Difficulty</span>
-                <div class="control-group">
-                    <select id="defaultDifficulty">
-                        <option value="beginner">Beginner</option>
-                        <option value="easy" selected>Easy</option>
-                        <option value="medium">Medium</option>
-                        <option value="hard">Hard</option>
-                    </select>
+            <!-- Statistics -->
+            <div class="content-section" id="stats">
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Track Statistics</span>
+                        <input type="checkbox" id="trackStats">
+                    </div>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <span class="setting-label">Games Completed</span>
+                        <span class="value-display" id="gamesCompleted">0</span>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Best Time</span>
+                        <span class="value-display" id="bestTime">--:--</span>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Average Time</span>
+                        <span class="value-display" id="averageTime">--:--</span>
+                    </div>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-item">
+                        <button class="button secondary" onclick="resetStats()">Reset Statistics</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Statistics -->
-        <div class="setting-group">
-            <div class="setting-title">📊 Statistics</div>
             
-            <div class="setting-item">
-                <span class="setting-label">Track Statistics</span>
-                <input type="checkbox" id="trackStats" checked>
+            <div class="actions">
+                <button class="button" onclick="saveSettings()">Save</button>
+                <button class="button secondary" onclick="resetToDefaults()">Reset Defaults</button>
+                <button class="button secondary" onclick="window.close()">Close</button>
             </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Games Completed</span>
-                <span class="volume-display" id="gamesCompleted">0</span>
+            <div class="auto-save-indicator" id="autoSaveIndicator" style="display: none;">
+                ✓ Settings saved automatically
             </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Best Time</span>
-                <span class="volume-display" id="bestTime">--:--</span>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label">Average Time</span>
-                <span class="volume-display" id="averageTime">--:--</span>
-            </div>
-            
-            <div class="setting-item">
-                <span class="setting-label"></span>
-                <button class="button secondary" onclick="resetStats()">Reset Statistics</button>
-            </div>
-        </div>
-        
-        <div class="actions">
-            <button class="button" onclick="saveSettings()">Save Settings</button>
-            <button class="button secondary" onclick="resetToDefaults()">Reset to Defaults</button>
-            <button class="button secondary" onclick="window.close()">Close</button>
-        </div>
-        
-        <div class="auto-save-indicator" id="autoSaveIndicator" style="display: none;">
-            ✓ Settings saved automatically
         </div>
     </div>
     
     <script>
-        // Audio context for generating tones
         let audioContext;
         let currentSettings = {};
         
-        // Initialize audio context
         function initAudio() {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
         }
         
-        // Generate different tones for different actions
         function playTone(frequency, duration, volume, type = 'sine') {
             if (!document.getElementById('soundEnabled').checked) return;
             
@@ -499,7 +525,6 @@
             oscillator.stop(audioContext.currentTime + duration);
         }
         
-        // Test different sound types
         function testSound(type) {
             const volumes = {
                 click: document.getElementById('masterVolume').value / 100,
@@ -516,9 +541,9 @@
                     playTone(600, 0.15, volumes.input);
                     break;
                 case 'success':
-                    playTone(523, 0.2, volumes.success); // C note
-                    setTimeout(() => playTone(659, 0.2, volumes.success), 200); // E note
-                    setTimeout(() => playTone(784, 0.3, volumes.success), 400); // G note
+                    playTone(523, 0.2, volumes.success);
+                    setTimeout(() => playTone(659, 0.2, volumes.success), 200);
+                    setTimeout(() => playTone(784, 0.3, volumes.success), 400);
                     break;
                 case 'error':
                     playTone(200, 0.3, volumes.error, 'sawtooth');
@@ -526,14 +551,12 @@
             }
         }
         
-        // Update volume displays
-        function updateVolumeDisplay(sliderId, displayId) {
+        function updateValueDisplay(sliderId, displayId) {
             const slider = document.getElementById(sliderId);
             const display = document.getElementById(displayId);
-            display.textContent = slider.value + '%';
+            display.textContent = slider.id === 'fontSize' ? `${slider.value}px` : `${slider.value}%`;
         }
         
-        // Set theme
         function setTheme(theme) {
             document.body.classList.remove('white-theme', 'black-theme', 'sage-theme');
             document.body.classList.add(`${theme}-theme`);
@@ -541,11 +564,9 @@
             autoSaveSettings();
         }
         
-        // Load settings from localStorage or set defaults
         function loadSettings() {
             const savedSettings = JSON.parse(localStorage.getItem('sudokuSettings') || '{}');
             
-            // Default settings
             const defaults = {
                 soundEnabled: true,
                 masterVolume: 70,
@@ -572,7 +593,6 @@
             
             currentSettings = { ...defaults, ...savedSettings };
             
-            // Apply settings to UI
             Object.keys(currentSettings).forEach(key => {
                 const element = document.getElementById(key);
                 if (element) {
@@ -580,26 +600,20 @@
                         element.checked = currentSettings[key];
                     } else if (element.type === 'range') {
                         element.value = currentSettings[key];
-                        updateVolumeDisplay(key, key + 'Display');
+                        updateValueDisplay(key, key + 'Display');
                     } else if (element.tagName === 'SELECT') {
                         element.value = currentSettings[key];
                     }
                 }
             });
             
-            // Apply theme
             setTheme(currentSettings.theme);
             
-            // Update font size display
-            document.getElementById('fontSizeDisplay').textContent = currentSettings.fontSize + 'px';
-            
-            // Update statistics display
             document.getElementById('gamesCompleted').textContent = currentSettings.gamesCompleted;
             document.getElementById('bestTime').textContent = formatTime(currentSettings.bestTime);
             document.getElementById('averageTime').textContent = formatTime(currentSettings.averageTime);
         }
         
-        // Format time for display
         function formatTime(seconds) {
             if (seconds === 0) return '--:--';
             const mins = Math.floor(seconds / 60);
@@ -607,27 +621,21 @@
             return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
         
-        // Save settings to localStorage
         function saveSettings() {
-            // Collect all settings
             const settings = {};
             
-            // Checkboxes
             ['soundEnabled', 'timerAlert', 'highlightConflicts', 'showHints', 'autoCheck', 'pauseOnBlur', 'keyboardNav', 'autoSave', 'trackStats'].forEach(id => {
                 settings[id] = document.getElementById(id).checked;
             });
             
-            // Range inputs
             ['masterVolume', 'inputVolume', 'successVolume', 'errorVolume', 'fontSize'].forEach(id => {
                 settings[id] = parseInt(document.getElementById(id).value);
             });
             
-            // Select elements
             ['timerAlertTime', 'animationSpeed', 'defaultDifficulty'].forEach(id => {
                 settings[id] = document.getElementById(id).value;
             });
             
-            // Keep existing stats
             settings.gamesCompleted = currentSettings.gamesCompleted;
             settings.bestTime = currentSettings.bestTime;
             settings.averageTime = currentSettings.averageTime;
@@ -640,14 +648,12 @@
             playTone(600, 0.1, 0.3);
         }
         
-        // Auto-save settings
         function autoSaveSettings() {
             if (document.getElementById('autoSave').checked) {
                 setTimeout(saveSettings, 100);
             }
         }
         
-        // Show auto-save indicator
         function showAutoSaveIndicator() {
             const indicator = document.getElementById('autoSaveIndicator');
             indicator.style.display = 'block';
@@ -656,7 +662,6 @@
             }, 2000);
         }
         
-        // Reset to defaults
         function resetToDefaults() {
             if (confirm('Are you sure you want to reset all settings to defaults?')) {
                 localStorage.removeItem('sudokuSettings');
@@ -664,7 +669,6 @@
             }
         }
         
-        // Reset statistics
         function resetStats() {
             if (confirm('Are you sure you want to reset all statistics?')) {
                 currentSettings.gamesCompleted = 0;
@@ -679,29 +683,34 @@
             }
         }
         
-        // Initialize page
+        function switchSection(sectionId) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            
+            document.querySelector(`.nav-item[data-section="${sectionId}"]`).classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+        }
+        
         document.addEventListener('DOMContentLoaded', () => {
             loadSettings();
             
-            // Add event listeners for auto-save
-            const autoSaveElements = document.querySelectorAll('input, select');
-            autoSaveElements.forEach(element => {
-                element.addEventListener('change', autoSaveSettings);
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    switchSection(item.dataset.section);
+                });
+            });
+            
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('change', autoSaveSettings);
                 
-                // Update volume displays for range inputs
-                if (element.type === 'range') {
-                    element.addEventListener('input', () => {
-                        const displayId = element.id + 'Display';
-                        if (element.id === 'fontSize') {
-                            document.getElementById(displayId).textContent = element.value + 'px';
-                        } else {
-                            updateVolumeDisplay(element.id, displayId);
-                        }
+                if (input.type === 'range') {
+                    input.addEventListener('input', () => {
+                        updateValueDisplay(input.id, input.id + 'Display');
                     });
                 }
             });
             
-            // Enable audio interaction on first user interaction
             document.addEventListener('click', initAudio, { once: true });
         });
     </script>
