@@ -32,6 +32,16 @@
             width: 100%;
             position: relative;
             transition: color 0.3s;
+            display: none;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .game-container.active {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
         }
         
         .black-theme .game-container {
@@ -169,7 +179,7 @@
         }
         
         .sage-theme .cell.initial {
-            color: #4a;
+            color: #4a7043;
         }
         
         .cell.error {
@@ -459,7 +469,15 @@
             max-width: 500px;
             width: 100%;
             text-align: center;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s ease, opacity 0.3s ease;
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .options-container.hidden {
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
         }
         
         .black-theme .options-container {
@@ -551,7 +569,321 @@
             width: 100px;
         }
         
-        @media (max-width: 500px) {
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .settings-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .settings-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 900px;
+            height: 80vh;
+            border-radius: 8px;
+            display: flex;
+            overflow: hidden;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        .black-theme .settings-content {
+            background-color: #1e1e1e;
+        }
+        
+        .sage-theme .settings-content {
+            background-color: #e0e6d7;
+        }
+        
+        .settings-modal.active .settings-content {
+            transform: scale(1);
+        }
+        
+        .settings-sidebar {
+            width: 200px;
+            padding: 20px;
+            border-right: 1px solid #e0e0e0;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
+        
+        .black-theme .settings-sidebar {
+            border-color: #444;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        .sage-theme .settings-sidebar {
+            border-color: #8a9a5b;
+            background-color: #e0e6d7;
+            color: #333;
+        }
+        
+        .settings-sidebar h2 {
+            font-size: 20px;
+            margin: 0 0 20px;
+            color: #2196f3;
+            transition: color 0.3s;
+        }
+        
+        .black-theme .settings-sidebar h2 {
+            color: #90caf9;
+        }
+        
+        .sage-theme .settings-sidebar h2 {
+            color: #689f38;
+        }
+        
+        .nav-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .nav-item:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .black-theme .nav-item:hover {
+            background-color: #3f51b5;
+        }
+        
+        .sage-theme .nav-item:hover {
+            background-color: #dcedc8;
+        }
+        
+        .nav-item.active {
+            background-color: #2196f3;
+            color: white;
+        }
+        
+        .black-theme .nav-item.active {
+            background-color: #5c6bc0;
+        }
+        
+        .sage-theme .nav-item.active {
+            background-color: #689f38;
+        }
+        
+        .settings-panel {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .setting-card {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .black-theme .setting-card {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        
+        .sage-theme .setting-card {
+            background-color: #f8f9f6;
+            color: #333;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .setting-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .setting-label {
+            font-size: 14px;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .black-theme .setting-label {
+            color: #b0b0b0;
+        }
+        
+        .sage-theme .setting-label {
+            color: #5a6b4d;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        input[type="range"] {
+            width: 120px;
+            cursor: pointer;
+        }
+        
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        select {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
+        
+        .black-theme select {
+            background-color: #333;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+        
+        .sage-theme select {
+            border-color: #8a9a5b;
+        }
+        
+        .value-display {
+            min-width: 35px;
+            text-align: center;
+            font-weight: bold;
+            color: #2196f3;
+            transition: color 0.3s;
+        }
+        
+        .black-theme .value-display {
+            color: #90caf9;
+        }
+        
+        .sage-theme .value-display {
+            color: #689f38;
+        }
+        
+        .settings-button {
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .settings-button:hover {
+            background-color: #1976d2;
+        }
+        
+        .black-theme .settings-button {
+            background-color: #3f51b5;
+        }
+        
+        .black-theme .settings-button:hover {
+            background-color: #5c6bc0;
+        }
+        
+        .sage-theme .settings-button {
+            background-color: #689f38;
+        }
+        
+        .sage-theme .settings-button:hover {
+            background-color: #558b2f;
+        }
+        
+        .settings-button.secondary {
+            background-color: #757575;
+        }
+        
+        .settings-button.secondary:hover {
+            background-color: #616161;
+        }
+        
+        .settings-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .theme-preview {
+            width: 30px;
+            height: 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .theme-white { background: linear-gradient(45deg, #fff 50%, #f0f0f0 50%); }
+        .theme-black { background: linear-gradient(45deg, #2a2a2a 50%, #121212 50%); }
+        .theme-sage { background: linear-gradient(45deg, #d7e4c0 50%, #e0e6d7 50%); }
+        
+        .auto-save-indicator {
+            font-size: 12px;
+            color: #4caf50;
+            font-style: italic;
+            margin-top: 10px;
+            transition: color 0.3s;
+        }
+        
+        .black-theme .auto-save-indicator {
+            color: #81c784;
+        }
+        
+        .sage-theme .auto-save-indicator {
+            color: #4a7043;
+        }
+        
+        @media (max-width: 700px) {
+            .settings-content {
+                flex-direction: column;
+                height: 90vh;
+            }
+            
+            .settings-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .black-theme .settings-sidebar {
+                border-color: #444;
+            }
+            
+            .sage-theme .settings-sidebar {
+                border-color: #8a9a5b;
+            }
+            
             .game-container {
                 padding: 10px;
                 width: 100%;
@@ -615,7 +947,7 @@
         <button class="difficulty-button" data-difficulty="fast">Fast (Hard, 8-min limit)</button>
     </div>
     
-    <div id="game-container" class="game-container" style="display: none;">
+    <div id="game-container" class="game-container">
         <div class="top-controls">
             <div class="top-left">
                 <button id="back" class="icon-button back-button">←</button>
@@ -649,6 +981,185 @@
         <div class="font-size-control" id="font-size-control" style="display: none;">
             <label for="font-size-slider">Font Size:</label>
             <input type="range" id="font-size-slider" min="12" max="32" value="16">
+        </div>
+    </div>
+    
+    <div id="settings-modal" class="settings-modal">
+        <div class="settings-content">
+            <div class="settings-sidebar">
+                <h2>Settings</h2>
+                <div class="nav-item active" data-section="audio">🔊 Audio</div>
+                <div class="nav-item" data-section="visual">🎨 Visual</div>
+                <div class="nav-item" data-section="gameplay">🎯 Gameplay</div>
+                <div class="nav-item" data-section="stats">📊 Statistics</div>
+            </div>
+            <div class="settings-panel">
+                <div class="content-section active" id="audio">
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Enable Sound Effects</span>
+                            <input type="checkbox" id="soundEnabled">
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Master Volume</span>
+                            <div class="control-group">
+                                <input type="range" id="masterVolume" min="0" max="100" value="70">
+                                <span class="value-display" id="masterVolumeDisplay">70%</span>
+                                <button class="settings-button" onclick="testSound('click')">Test</button>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Number Input Sound</span>
+                            <div class="control-group">
+                                <input type="range" id="inputVolume" min="0" max="100" value="60">
+                                <span class="value-display" id="inputVolumeDisplay">60%</span>
+                                <button class="settings-button" onclick="testSound('input')">Test</button>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Success Sound</span>
+                            <div class="control-group">
+                                <input type="range" id="successVolume" min="0" max="100" value="80">
+                                <span class="value-display" id="successVolumeDisplay">80%</span>
+                                <button class="settings-button" onclick="testSound('success')">Test</button>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Error Sound</span>
+                            <div class="control-group">
+                                <input type="range" id="errorVolume" min="0" max="100" value="50">
+                                <span class="value-display" id="errorVolumeDisplay">50%</span>
+                                <button class="settings-button" onclick="testSound('error')">Test</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Timer Alert</span>
+                            <div class="control-group">
+                                <input type="checkbox" id="timerAlert">
+                                <select id="timerAlertTime">
+                                    <option value="60">1 minute left</option>
+                                    <option value="120">2 minutes left</option>
+                                    <option value="300">5 minutes left</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="visual">
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Theme</span>
+                            <div class="control-group">
+                                <div class="theme-preview theme-white" onclick="setTheme('white')" title="Light Theme"></div>
+                                <div class="theme-preview theme-black" onclick="setTheme('black')" title="Dark Theme"></div>
+                                <div class="theme-preview theme-sage" onclick="setTheme('sage')" title="Sage Theme"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Font Size</span>
+                            <div class="control-group">
+                                <input type="range" id="fontSize" min="12" max="32" value="16">
+                                <span class="value-display" id="fontSizeDisplay">16px</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Highlight Conflicts</span>
+                            <input type="checkbox" id="highlightConflicts">
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Show Possible Numbers</span>
+                            <input type="checkbox" id="showHints">
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Animation Speed</span>
+                            <select id="animationSpeed">
+                                <option value="slow">Slow</option>
+                                <option value="normal">Normal</option>
+                                <option value="fast">Fast</option>
+                                <option value="none">No Animation</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="gameplay">
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Auto-Check Mistakes</span>
+                            <input type="checkbox" id="autoCheck">
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Pause on Focus Loss</span>
+                            <input type="checkbox" id="pauseOnBlur">
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Keyboard Navigation</span>
+                            <input type="checkbox" id="keyboardNav">
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Auto-Save Progress</span>
+                            <input type="checkbox" id="autoSave">
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Default Difficulty</span>
+                            <select id="defaultDifficulty">
+                                <option value="beginner">Beginner</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="stats">
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Track Statistics</span>
+                            <input type="checkbox" id="trackStats">
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <span class="setting-label">Games Completed</span>
+                            <span class="value-display" id="gamesCompleted">0</span>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Best Time</span>
+                            <span class="value-display" id="bestTime">--:--</span>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Average Time</span>
+                            <span class="value-display" id="averageTime">--:--</span>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <div class="setting-item">
+                            <button class="settings-button secondary" onclick="resetStats()">Reset Statistics</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-actions">
+                    <button class="settings-button" onclick="saveSettings()">Save</button>
+                    <button class="settings-button secondary" onclick="resetToDefaults()">Reset Defaults</button>
+                    <button class="settings-button secondary" onclick="closeSettings()">Close</button>
+                </div>
+                <div class="auto-save-indicator" id="autoSaveIndicator" style="display: none;">
+                    ✓ Settings saved automatically
+                </div>
+            </div>
         </div>
     </div>
     
@@ -699,12 +1210,14 @@
                 this.difficultyDisplay = document.getElementById('difficulty-display');
                 this.fontSizeControl = document.getElementById('font-size-control');
                 this.fontSizeSlider = document.getElementById('font-size-slider');
+                this.settingsModal = document.getElementById('settings-modal');
                 
                 this.loadSettings();
                 this.applySettings();
                 this.setupOptionsEventListeners();
                 this.initializeBoard();
                 this.setupGameEventListeners();
+                this.setupSettingsEventListeners();
             }
             
             loadSettings() {
@@ -713,6 +1226,47 @@
                 this.currentTheme = this.settings.theme;
                 document.body.classList.add(`${this.currentTheme}-theme`);
                 this.fontSizeSlider.value = this.settings.fontSize;
+                
+                const settingsInputs = {
+                    soundEnabled: 'checkbox',
+                    masterVolume: 'range',
+                    inputVolume: 'range',
+                    successVolume: 'range',
+                    errorVolume: 'range',
+                    timerAlert: 'checkbox',
+                    timerAlertTime: 'select',
+                    theme: null,
+                    fontSize: 'range',
+                    highlightConflicts: 'checkbox',
+                    showHints: 'checkbox',
+                    animationSpeed: 'select',
+                    autoCheck: 'checkbox',
+                    pauseOnBlur: 'checkbox',
+                    keyboardNav: 'checkbox',
+                    autoSave: 'checkbox',
+                    defaultDifficulty: 'select',
+                    trackStats: 'checkbox'
+                };
+                
+                Object.entries(settingsInputs).forEach(([key, type]) => {
+                    if (type) {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            if (type === 'checkbox') {
+                                element.checked = this.settings[key];
+                            } else if (type === 'range') {
+                                element.value = this.settings[key];
+                                document.getElementById(`${key}Display`).textContent = key === 'fontSize' ? `${this.settings[key]}px` : `${this.settings[key]}%`;
+                            } else if (type === 'select') {
+                                element.value = this.settings[key];
+                            }
+                        }
+                    }
+                });
+                
+                document.getElementById('gamesCompleted').textContent = this.settings.gamesCompleted;
+                document.getElementById('bestTime').textContent = this.formatTime(this.settings.bestTime);
+                document.getElementById('averageTime').textContent = this.formatTime(this.settings.averageTime);
             }
             
             applySettings() {
@@ -721,6 +1275,20 @@
                 document.querySelectorAll('.cell').forEach(cell => {
                     cell.style.fontSize = `${this.settings.fontSize}px`;
                 });
+                document.querySelectorAll('.digit').forEach(digit => {
+                    digit.style.fontSize = `${this.settings.fontSize}px`;
+                });
+                this.boardElement.style.transitionDuration = this.getAnimationDuration();
+            }
+            
+            getAnimationDuration() {
+                switch (this.settings.animationSpeed) {
+                    case 'slow': return '0.5s';
+                    case 'normal': return '0.3s';
+                    case 'fast': return '0.1s';
+                    case 'none': return '0s';
+                    default: return '0.3s';
+                }
             }
             
             initAudio() {
@@ -772,7 +1340,8 @@
                         setTimeout(() => this.playTone(784, 0.3, volumes.success), 400);
                         break;
                     case 'error':
-                        this.playTone(200, 0.3, volumes.error, 'sawtooth');
+                        this.playTone(300, 0.25, volumes.error, 'sawtooth');
+                        setTimeout(() => this.playTone(250, 0.25, volumes.error, 'sawtooth'), 150);
                         break;
                 }
             }
@@ -806,9 +1375,16 @@
                     button.addEventListener('click', () => {
                         this.difficulty = button.dataset.difficulty;
                         this.timeLimit = this.difficulty === 'fast' ? 8 * 60 : null;
-                        this.optionsContainer.style.display = 'none';
-                        this.gameContainer.style.display = 'block';
-                        this.newGame();
+                        this.optionsContainer.classList.add('hidden');
+                        setTimeout(() => {
+                            this.optionsContainer.style.display = 'none';
+                            this.gameContainer.style.display = 'block';
+                            this.gameContainer.classList.add('active');
+                            this.newGame();
+                        }, 300);
+                        if (this.settings.soundEnabled) {
+                            this.playSound('click');
+                        }
                     });
                 });
             }
@@ -826,6 +1402,9 @@
                         this.selectedCell.classList.add('selected');
                         if (this.settings.highlightConflicts) {
                             this.highlightRelatedCells();
+                        }
+                        if (this.settings.soundEnabled) {
+                            this.playSound('click');
                         }
                     }
                 });
@@ -945,7 +1524,7 @@
                 });
                 
                 document.getElementById('settings').addEventListener('click', () => {
-                    window.open('settings.html', '_blank');
+                    this.openSettings();
                     if (this.settings.soundEnabled) {
                         this.playSound('click');
                     }
@@ -953,8 +1532,12 @@
                 
                 document.getElementById('back').addEventListener('click', () => {
                     this.stopTimer();
-                    this.gameContainer.style.display = 'none';
-                    this.optionsContainer.style.display = 'block';
+                    this.gameContainer.classList.remove('active');
+                    setTimeout(() => {
+                        this.gameContainer.style.display = 'none';
+                        this.optionsContainer.style.display = 'block';
+                        this.optionsContainer.classList.remove('hidden');
+                    }, 300);
                     if (this.settings.soundEnabled) {
                         this.playSound('click');
                     }
@@ -1000,6 +1583,152 @@
                 }
             }
             
+            setupSettingsEventListeners() {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                        item.classList.add('active');
+                        document.getElementById(item.dataset.section).classList.add('active');
+                        if (this.settings.soundEnabled) {
+                            this.playSound('click');
+                        }
+                    });
+                });
+                
+                const inputs = document.querySelectorAll('#settings-modal input, #settings-modal select');
+                inputs.forEach(input => {
+                    input.addEventListener('change', () => {
+                        this.updateSettings();
+                        this.applySettings();
+                        this.autoSaveSettings();
+                    });
+                    if (input.type === 'range') {
+                        input.addEventListener('input', () => {
+                            document.getElementById(`${input.id}Display`).textContent = 
+                                input.id === 'fontSize' ? `${input.value}px` : `${input.value}%`;
+                        });
+                    }
+                });
+            }
+            
+            updateSettings() {
+                this.settings.soundEnabled = document.getElementById('soundEnabled').checked;
+                this.settings.masterVolume = parseInt(document.getElementById('masterVolume').value);
+                this.settings.inputVolume = parseInt(document.getElementById('inputVolume').value);
+                this.settings.successVolume = parseInt(document.getElementById('successVolume').value);
+                this.settings.errorVolume = parseInt(document.getElementById('errorVolume').value);
+                this.settings.timerAlert = document.getElementById('timerAlert').checked;
+                this.settings.timerAlertTime = parseInt(document.getElementById('timerAlertTime').value);
+                this.settings.fontSize = parseInt(document.getElementById('fontSize').value);
+                this.settings.highlightConflicts = document.getElementById('highlightConflicts').checked;
+                this.settings.showHints = document.getElementById('showHints').checked;
+                this.settings.animationSpeed = document.getElementById('animationSpeed').value;
+                this.settings.autoCheck = document.getElementById('autoCheck').checked;
+                this.settings.pauseOnBlur = document.getElementById('pauseOnBlur').checked;
+                this.settings.keyboardNav = document.getElementById('keyboardNav').checked;
+                this.settings.autoSave = document.getElementById('autoSave').checked;
+                this.settings.defaultDifficulty = document.getElementById('defaultDifficulty').value;
+                this.settings.trackStats = document.getElementById('trackStats').checked;
+            }
+            
+            openSettings() {
+                this.settingsModal.classList.add('active');
+                this.isPaused = true;
+                document.getElementById('pause-timer').textContent = '▶';
+            }
+            
+            closeSettings() {
+                this.settingsModal.classList.remove('active');
+                this.isPaused = false;
+                document.getElementById('pause-timer').textContent = '⏸';
+                if (this.timerInterval) {
+                    this.resumeTimer();
+                }
+            }
+            
+            testSound(type) {
+                this.playSound(type);
+            }
+            
+            setTheme(theme) {
+                this.settings.theme = theme;
+                this.currentTheme = theme;
+                this.applySettings();
+                this.saveSettings();
+                if (this.settings.soundEnabled) {
+                    this.playSound('click');
+                }
+            }
+            
+            saveSettings() {
+                localStorage.setItem('sudokuSettings', JSON.stringify(this.settings));
+            }
+            
+            autoSaveSettings() {
+                if (this.settings.autoSave) {
+                    this.saveSettings();
+                    const indicator = document.getElementById('autoSaveIndicator');
+                    indicator.style.display = 'block';
+                    setTimeout(() => {
+                        indicator.style.display = 'none';
+                    }, 2000);
+                    if (this.settings.soundEnabled) {
+                        this.playTone(600, 0.1, 0.3);
+                    }
+                }
+            }
+            
+            resetToDefaults() {
+                if (confirm('Are you sure you want to reset all settings to defaults?')) {
+                    localStorage.removeItem('sudokuSettings');
+                    this.settings = {
+                        soundEnabled: true,
+                        masterVolume: 70,
+                        inputVolume: 60,
+                        successVolume: 80,
+                        errorVolume: 50,
+                        timerAlert: true,
+                        timerAlertTime: 60,
+                        theme: 'white',
+                        fontSize: 16,
+                        highlightConflicts: true,
+                        showHints: false,
+                        animationSpeed: 'normal',
+                        autoCheck: true,
+                        pauseOnBlur: true,
+                        keyboardNav: true,
+                        autoSave: true,
+                        defaultDifficulty: 'easy',
+                        trackStats: true,
+                        gamesCompleted: 0,
+                        bestTime: 0,
+                        averageTime: 0
+                    };
+                    this.saveSettings();
+                    this.loadSettings();
+                    this.applySettings();
+                    if (this.settings.soundEnabled) {
+                        this.playSound('click');
+                    }
+                }
+            }
+            
+            resetStats() {
+                if (confirm('Are you sure you want to reset all statistics?')) {
+                    this.settings.gamesCompleted = 0;
+                    this.settings.bestTime = 0;
+                    this.settings.averageTime = 0;
+                    document.getElementById('gamesCompleted').textContent = '0';
+                    document.getElementById('bestTime').textContent = '--:--';
+                    document.getElementById('averageTime').textContent = '--:--';
+                    this.saveSettings();
+                    if (this.settings.soundEnabled) {
+                        this.playSound('click');
+                    }
+                }
+            }
+            
             moveSelection(row, col) {
                 if (this.selectedCell) {
                     this.selectedCell.classList.remove('selected');
@@ -1015,6 +1744,9 @@
                     }
                 } else {
                     this.selectedCell = null;
+                }
+                if (this.settings.soundEnabled) {
+                    this.playSound('click');
                 }
             }
             
@@ -1054,11 +1786,17 @@
                 }
                 const totalTime = (this.settings.averageTime * (this.settings.gamesCompleted - 1) + this.seconds) / this.settings.gamesCompleted;
                 this.settings.averageTime = Math.round(totalTime);
+                document.getElementById('gamesCompleted').textContent = this.settings.gamesCompleted;
+                document.getElementById('bestTime').textContent = this.formatTime(this.settings.bestTime);
+                document.getElementById('averageTime').textContent = this.formatTime(this.settings.averageTime);
                 this.saveSettings();
             }
             
-            saveSettings() {
-                localStorage.setItem('sudokuSettings', JSON.stringify(this.settings));
+            formatTime(seconds) {
+                if (seconds === 0) return '--:--';
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
             }
             
             hasConflict(row, col, value) {
@@ -1295,6 +2033,7 @@
                     } else {
                         cell.textContent = '';
                     }
+                    cell.style.fontSize = `${this.settings.fontSize}px`;
                 });
                 
                 this.difficultyDisplay.textContent = (this.difficulty || this.settings.defaultDifficulty).charAt(0).toUpperCase() + (this.difficulty || this.settings.defaultDifficulty).slice(1);
@@ -1374,9 +2113,37 @@
             }
         }
         
+        function saveSettings() {
+            game.updateSettings();
+            game.saveSettings();
+            game.applySettings();
+            game.closeSettings();
+        }
+        
+        function closeSettings() {
+            game.closeSettings();
+        }
+        
+        function testSound(type) {
+            game.testSound(type);
+        }
+        
+        function setTheme(theme) {
+            game.setTheme(theme);
+        }
+        
+        function resetToDefaults() {
+            game.resetToDefaults();
+        }
+        
+        function resetStats() {
+            game.resetStats();
+        }
+        
+        let game;
         document.addEventListener('DOMContentLoaded', () => {
-            new Game();
-            document.addEventListener('click', () => new Game().initAudio(), { once: true });
+            game = new Game();
+            document.addEventListener('click', () => game.initAudio(), { once: true });
         });
     </script>
 </body>
