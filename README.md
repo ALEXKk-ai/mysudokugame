@@ -34,7 +34,7 @@ Contributions are welcome! If you would like to contribute to the project, pleas
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ## Contact
-For any inquiries, please contact ALEXKk-ai at email@example.com.
+For any inquiries, please contact ALEXKk-ai at akanja59@gmail.com.
 
 ## Acknowledgements
 - Special thanks to all who contribute to making puzzle games enjoyable!
